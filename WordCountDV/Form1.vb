@@ -9,6 +9,7 @@ Public Class Form1
         txtEntry.Focus()
     End Sub
 
+    ' This event handles "count" button click...
     Private Sub btnCount_Click(ByVal sender As System.Object, ByVal e As  _
     System.EventArgs) Handles btnCount.Click
         Dim J As Integer, Last As Integer = txtEntry.TextLength - 1
