@@ -2,13 +2,13 @@
 
 A proxy server that intercepts and stores calls to large language models (LLMs) for building fine-tuning datasets for small, efficient models. Perfect for training compact models like [Liquid AI's LFM2 series](https://huggingface.co/collections/LiquidAI/lfm2-686d721927015b2ad73eaa38) (350M to 2.6B parameters) using data from larger models.
 
-Works with any OpenAI-compatible API including OpenRouter, OpenAI, Azure OpenAI, and local LLM servers.
+Works with any OpenAI-compatible API including OpenRouter, other API providers, and local LLM servers.
 
 ## Features
 
 - 🎯 **Ready for fine-tuning** - Automatically formats conversations with assistant responses for direct model training
 - 🔄 **OpenAI-compatible API** - Drop-in replacement for OpenAI API clients
-- 🌐 **API agnostic** - Works with OpenRouter, OpenAI, Azure OpenAI, Ollama, and any OpenAI-compatible endpoint
+- 🌐 **API agnostic** - Works with OpenRouter, llama.cpp (llama-server), and any OpenAI-compatible endpoint
 - 📊 **Request logging** - Stores all requests and responses in SQLite database
 - 🌊 **Streaming support** - Full support for SSE streaming responses
 - 🔧 **Function calls** - Supports OpenAI function calling and tools
@@ -48,9 +48,9 @@ pip install -e ".[dev]"
 # Using OpenRouter (default)
 llm-intercept serve --admin-password YOUR_SECURE_PASSWORD
 
-# Using OpenAI
+# Using OpenRouter (manual)
 llm-intercept serve \
-  --base-url https://api.openai.com/v1/chat/completions \
+  --base-url https://openrouter.ai/api/v1/chat/completions \
   --admin-password YOUR_SECURE_PASSWORD
 
 # Using a local Ollama server
@@ -76,14 +76,14 @@ Simply point your OpenAI-compatible client to the proxy server:
 ```python
 import openai
 
-# The API key should be for your target API (OpenRouter, OpenAI, etc.)
+
 client = openai.OpenAI(
     base_url="http://localhost:8000/v1",
-    api_key="your-api-key"  # e.g., OpenRouter, OpenAI, or Azure key
+    api_key="your-api-key"  # e.g., OpenRouter key
 )
 
 response = client.chat.completions.create(
-    model="anthropic/claude-3.5-sonnet",  # Use appropriate model for your target API
+    model="deepseek/deepseek-chat-v3.1",  # Use appropriate model for your target API
     messages=[
         {"role": "user", "content": "Hello, how are you?"}
     ]
@@ -117,26 +117,11 @@ Start the proxy server.
 # Basic usage (OpenRouter)
 llm-intercept serve --admin-password mypassword
 
-# Using OpenAI
-llm-intercept serve \
-  --base-url https://api.openai.com/v1/chat/completions \
-  --admin-password mypassword
-
-# Using Azure OpenAI
-llm-intercept serve \
-  --base-url "https://YOUR_RESOURCE.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT/chat/completions?api-version=2024-02-15-preview" \
-  --admin-password mypassword
-
 # Custom host and port
 llm-intercept serve --host 127.0.0.1 --port 5000 --admin-password mypassword
 
 # Development mode with auto-reload
 llm-intercept serve --admin-password mypassword --reload
-
-# Using environment variables
-export BASE_URL=https://api.openai.com/v1/chat/completions
-export ADMIN_PASSWORD=mypassword
-llm-intercept serve
 ```
 
 ### `llm-intercept init-database`
@@ -162,7 +147,7 @@ OpenAI-compatible chat completions endpoint. Forwards requests to the configured
 - `Authorization: Bearer YOUR_API_KEY` (API key for your target service)
 
 **Supported parameters:**
-- `model` - Model identifier (e.g., `anthropic/claude-3.5-sonnet`)
+- `model` - Model identifier (e.g., `deepseek/deepseek-chat-v3.1`)
 - `messages` - Array of message objects
 - `temperature` - Sampling temperature
 - `max_tokens` - Maximum tokens to generate
@@ -230,7 +215,7 @@ Admin dashboard interface (password protected).
     {"role": "user", "content": "Hello"},
     {"role": "assistant", "content": "Hi there!"}
   ],
-  "model": "anthropic/claude-3.5-sonnet",
+  "model": "deepseek/deepseek-chat-v3.1",
   "timestamp": "2024-01-01T12:00:00",
   "tool_calls": [...]  // Optional, if present
 }
@@ -263,11 +248,11 @@ The package uses SQLModel with SQLite by default. The main table `llm_requests` 
 
 ### Fine-tuning Dataset Collection
 
-1. Build an application using a large, expensive model (e.g., GPT-4, Claude Opus)
+1. Build an application using a large, expensive model (e.g., DeepSeek, Qwen3)
 2. Route all API calls through LLM Intercept proxy
 3. Collect real-world usage data
 4. Export the dataset
-5. Fine-tune a smaller, cheaper model (e.g., 3B parameter model)
+5. Fine-tune a smaller, cheaper model (e.g., LFM2-1.2B)
 6. Deploy the fine-tuned model locally or at lower cost
 
 ### API Monitoring
@@ -301,8 +286,5 @@ ruff check llm_intercept/
 
 ## License
 
-MIT
+MIT license. See `LICENSE` file for details.
 
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
