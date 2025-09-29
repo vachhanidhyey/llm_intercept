@@ -2,9 +2,18 @@
 
 A proxy server that intercepts and stores calls to large language models (LLMs) for building fine-tuning datasets for small, efficient models. Perfect for training compact models like [Liquid AI's LFM2 series](https://huggingface.co/collections/LiquidAI/lfm2-686d721927015b2ad73eaa38) (350M to 2.6B parameters) using data from larger models.
 
+The steps are as simple as:
+
+1. Use a LLM in your app via an OpenAI-compatible API to solve your task.
+2. Run traffic through LLM Intercept (this package) to log the data
+3. Export the dataset directly as parquet and with system prompts removed (optional)
+4. Fine-tune a smaller model on the collected data
+5. Replace the large model with your fine-tuned small model much cheaper/faster or locally at zero cost
+6. Profit!
+
 Works with any OpenAI-compatible API including OpenRouter, other API providers, and local LLM servers.
 
-## Features
+## Key Features
 
 - 🎯 **Ready for fine-tuning** - Automatically formats conversations with assistant responses for direct model training
 - 🔄 **OpenAI-compatible API** - Drop-in replacement for OpenAI API clients
