@@ -4,15 +4,6 @@ A proxy server that intercepts and stores calls to large language models (LLMs) 
 
 Works with any OpenAI-compatible API including OpenRouter, OpenAI, Azure OpenAI, and local LLM servers.
 
-> **⚠️ Legal Disclaimer**
-> Users are responsible for ensuring compliance with the terms of service of their model provider regarding fine-tuning on model outputs. Some proprietary models (e.g., OpenAI, Anthropic) may restrict this usage. We recommend using open-source models with permissive licenses such as:
-> - **DeepSeek-V3.2** (MIT License)
-> - **Qwen3-235B-A22B** (Apache 2.0)
-> - **GLM-4.5** (MIT License)
-> - Other Apache 2.0 / MIT licensed models
->
-> Always review your provider's terms before collecting training data.
-
 ## Features
 
 - 🎯 **Ready for fine-tuning** - Automatically formats conversations with assistant responses for direct model training
@@ -25,6 +16,15 @@ Works with any OpenAI-compatible API including OpenRouter, OpenAI, Azure OpenAI,
 - 📦 **Export functionality** - Export as JSONL.zstd or Parquet format for ML pipelines
 - 🔍 **Search & filter** - Filter by date, model, and search message content
 - 🔐 **Password protected** - Admin interface secured with password authentication
+
+> **⚠️ Legal Disclaimer**
+> Users are responsible for ensuring compliance with the terms of service of their model provider regarding fine-tuning on model outputs. Some proprietary models (e.g., OpenAI, Anthropic) may restrict this usage. We recommend using open-source models with permissive licenses such as:
+> - **DeepSeek-V3.2** (MIT License)
+> - **Qwen3-235B-A22B** (Apache 2.0)
+> - **GLM-4.5** (MIT License)
+> - Other Apache 2.0 / MIT licensed models
+>
+> Always review your provider's terms before collecting training data.
 
 ## Installation
 
