@@ -297,3 +297,7 @@ ruff check llm_intercept/
 
 MIT license. See `LICENSE` file for details.
 
+---
+
+<sub>This app was vibe-coded with Claude Code (Sonnet 4.5) in under an hour. No guarantees, no warranties, use at your own risk! 🚀</sub>
+
