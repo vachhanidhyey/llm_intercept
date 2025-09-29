@@ -269,8 +269,8 @@ async def admin_interface(
                         Include System Prompts
                     </label>
                     <select id="exportFormat" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                        <option value="parquet" selected>Parquet</option>
                         <option value="jsonl">JSONL.zstd</option>
-                        <option value="parquet">Parquet</option>
                     </select>
                     <button class="secondary" onclick="exportData()">Export Dataset</button>
                 </div>
